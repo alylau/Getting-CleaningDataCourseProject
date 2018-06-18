@@ -73,36 +73,32 @@ for(i in 1:c){
   Calculation[i] <- case_when(
     "mean()" %in% z   ~ "MeanValue",
     "std()" %in% z  ~ "StandardDeviation",
-    "Freq()" %in% z ~ "MeanFrequencyValue"
-  )
+    "Freq()" %in% z ~ "MeanFrequencyValue" )
   Axis[i] <- case_when(
     "X" %in% z  ~ "X",
     "Y" %in% z  ~ "Y",
-    "Z" %in% z  ~ "Z"
-  )
+    "Z" %in% z  ~ "Z" )
 }
 reshape_Set <- mutate(reshape_set, Type = Type, Object = Object, Measurement_1 = Measurement_1, Measurement_2 = Measurement_2, Calculation = Calculation, Axis = Axis)
-write.csv(reshape_Set,"reshaped.csv")
 
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-testsub <- unique(factor(testing_set$subject))
-for(i in 1:30){ 
+var <- unique(reshape_Set$variable)
+for(i in 1){ 
   for(j in activitylabel$activity){
-   newsubset <- subset(extracctset, subject == i)
+   newsubset <- subset(reshape_Set, subject == i)
    newsubset <- subset(newsubset, activity == j)
-   newrow <- colMeans((newsubset[,4:82]))
-   newrow <- as.list(newrow)
-   newrow <- cbind(newsubset[1,1:3],newrow)
-    if(!(exists("newset"))){
-      newset <- newrow
-      }
-    else{
-      newset <- rbind(newset, newrow)}
+   for(c in var){VarMeanSet <- subset(newsubset, variable == c)
+                VarMean <- mean(VarMeanSet$value)
+                newrow <- cbind(VarMeanSet[1,c(1:4,6:11)],VarMean)
+                if(!(exists("newset"))){
+                newset <- newrow
+                }else{
+                newset <- rbind(newset, newrow)}
+                }
   }
 }
-variableMeans <- melt(newset, id=colName[1:3])
-write.csv(variableMeans,"variableMeans.csv")
+write.csv(newset,"variableMeans.csv")
 
 
 
