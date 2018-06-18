@@ -28,7 +28,6 @@ testing_set <- cbind(testing_subject, testing_label,testing_set)
 
 #Merges the training and the test sets to create one data set
 wholeset <- rbind(testing_set, training_set)
-write.csv(wholeset,"wholeset.csv")
 
 #Extracts only the measurements on the mean and standard deviation for each measurement.
 uniquecol <- unique(names(wholeset))
@@ -41,7 +40,6 @@ activitylabel <- read.csv("activity_labels.txt", sep = " ", header = FALSE)
 names(activitylabel) <- c("label", "activity")
 extracctset[,2] <- sapply(extracctset[,2] ,function(x)activitylabel$activity[x])
 names(extracctset)[2] <- "activity"
-write.csv(extracctset, "extract.csv")
 
 #Appropriately labels the data set with descriptive variable names.
 colName <- names(extracctset)
@@ -84,7 +82,7 @@ reshape_Set <- mutate(reshape_set, Type = Type, Object = Object, Measurement_1 =
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 var <- unique(reshape_Set$variable)
-for(i in 1){ 
+for(i in 1:30){ 
   for(j in activitylabel$activity){
    newsubset <- subset(reshape_Set, subject == i)
    newsubset <- subset(newsubset, activity == j)
@@ -98,7 +96,6 @@ for(i in 1){
                 }
   }
 }
-write.csv(newset,"variableMeans.csv")
 
 
 
