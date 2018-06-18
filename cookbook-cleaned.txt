@@ -1,0 +1,13 @@
+cookbook
+subject		The ID of subject, range from 1 to 30
+activity	The type of recording activity, contains WALKING, WALKING UPSTAIRS, WALKING DOWNSTAIRS, SITTING, STANDING and LAYING.
+
+section		The group that subject is included, including test and train
+variable	ID of the variable
+value		value of measurement.
+Type		which type of data it is, including denote time and frequency domain signals
+Object		which object is measured, including body or gravity.
+Measurement_1	which measurement is made, including acceleration or angular velocity
+Measurement_2	which measurement based on Measurement_1 is made, including jerk signal, magnitude of signal and magnitude of jerk signals.
+Calculation	what calculation is made. In the extracted data it contains mean value, standard deviation and mean frequency value.
+Axis		which axis is measured.
